@@ -1,0 +1,48 @@
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Load the data
+data = pd.read_csv("hotel_booking_data.csv")
+
+# Display basic information about the data
+print(data.info())
+
+# Display first few rows of the data
+print(data.head())
+
+# Preprocessing
+# Convert date columns to datetime
+data['reservation_status_date'] = pd.to_datetime(data['reservation_status_date'])
+
+# EDA
+# Let's create some visualizations
+
+# Scatter plot of lead_time vs adr (Average Daily Rate)
+plt.figure(figsize=(10, 6))
+sns.scatterplot(x='lead_time', y='adr', data=data, hue='is_canceled')
+plt.title('Scatter Plot of Lead Time vs ADR')
+plt.xlabel('Lead Time')
+plt.ylabel('ADR')
+plt.show()
+
+# Pairplot to visualize relationships between numeric features
+sns.pairplot(data[['lead_time', 'stays_in_weekend_nights', 'stays_in_week_nights', 'adr']])
+plt.show()
+
+# Kernel Density Estimate plot for lead time
+plt.figure(figsize=(10, 6))
+sns.kdeplot(data['lead_time'], shade=True)
+plt.title('Kernel Density Estimate Plot for Lead Time')
+plt.xlabel('Lead Time')
+plt.ylabel('Density')
+plt.show()
+
+# Conclusion
+# From the scatter plot, we can observe that there is some correlation between lead time and ADR,
+# and canceled bookings tend to have higher lead times.
+# The pairplot helps us visualize the relationships between different numeric features.
+# The Kernel Density Estimate plot gives us an idea about the distribution of lead time.
+
+
+
